@@ -1,0 +1,37 @@
+body {
+  font-family: Inter;
+}
+
+.image-container {
+  width: 113px;
+  height: 113px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .placeholder {
+    background-color: #C3CBD5;
+  }
+
+  .img {
+    max-width: auto;
+    max-height: auto;
+    object-fit: cover;
+  }
+}
+
+.avatar-uploader-container {
+  height: 177px;
+  width: 553px;
+  border-radius: 8px;
+  background-color: #F2F5F8;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+
+  &.bordered {
+    border: 2px dashed #C7CDD3;
+  }
+}

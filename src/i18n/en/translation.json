@@ -1,0 +1,14 @@
+{
+  "initialState": {
+    "logo": "Organization Logo",
+    "dropImage": "Drop the image here or click to browse."
+  },
+  "errorState": {
+    "sorry": "Sorry, the upload failed.",
+    "tryAgain": "Try again"
+  },
+  "croppingState": {
+    "crop": "Crop",
+    "save": "Save"
+  }
+}
