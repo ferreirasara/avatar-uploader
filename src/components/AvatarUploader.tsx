@@ -2,7 +2,7 @@ import '../i18n/config';
 import { useCallback, useState } from "react";
 import { useDropzone } from 'react-dropzone';
 import { ImageContainer } from './ImageContainer';
-import { AvatarUploaderContainerProps, AvatarUploaderInitialProps, AvatarUploaderInnerProps, AvatarUploaderComponentState, AvatarUploaderCropProps, AvatarUploaderErrorProps } from '../@types/AvatarUploader';
+import { AvatarUploaderContainerProps, AvatarUploaderInitialProps, AvatarUploaderInnerProps, AvatarUploaderComponentState, AvatarUploaderCropProps, AvatarUploaderErrorProps, CloseButtonProps } from '../@types/AvatarUploader';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as ImageFileIcon } from '../icons/image-file.svg';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
@@ -14,8 +14,15 @@ const AvatarUploaderContainer = (props: AvatarUploaderContainerProps) => {
   </div>
 }
 
+const CloseButton = (props: CloseButtonProps) => {
+  const { onClick } = props;
+  return <div className='close-button-container'>
+    <CloseIcon onClick={onClick} />
+  </div>
+}
+
 const AvatarUploaderInner = (props: AvatarUploaderInnerProps) => {
-  const { componentState, uploadedImage, onUploadImage, onCancelCropping, onSaveCropping } = props;
+  const { componentState, uploadedImage, onUploadImage, onCancel, onSaveCropping } = props;
 
   switch (componentState) {
     case 'initial':
@@ -24,11 +31,13 @@ const AvatarUploaderInner = (props: AvatarUploaderInnerProps) => {
         uploadedImage={uploadedImage}
       />
     case 'error':
-      return <AvatarUploaderError />
+      return <AvatarUploaderError
+        onCancel={onCancel}
+      />
     case 'cropping':
       return <AvatarUploaderCrop
         uploadedImage={uploadedImage}
-        onCancelCropping={onCancelCropping}
+        onCancel={onCancel}
         onSaveCropping={onSaveCropping}
       />
 
@@ -41,21 +50,22 @@ const AvatarUploaderInner = (props: AvatarUploaderInnerProps) => {
 }
 
 const AvatarUploaderError = (props: AvatarUploaderErrorProps) => {
+  const { onCancel } = props;
   const { t } = useTranslation();
 
   return <>
     <ImageContainer />
-    <div>
+    <div className='error-text-container'>
       <span className='error-text'>{t('errorState.sorry')}</span>
       <br />
       <span className="try-again-text">{t('errorState.tryAgain')}</span>
     </div>
-    <CloseIcon />
+    <CloseButton onClick={onCancel} />
   </>
 }
 
 const AvatarUploaderCrop = (props: AvatarUploaderCropProps) => {
-  const { uploadedImage, onCancelCropping, onSaveCropping } = props;
+  const { uploadedImage, onCancel, onSaveCropping } = props;
   const { t } = useTranslation();
 
   return <>
@@ -68,7 +78,7 @@ const AvatarUploaderCrop = (props: AvatarUploaderCropProps) => {
         {t('croppingState.save')}
       </button>
     </div>
-    <CloseIcon onClick={onCancelCropping} />
+    <CloseButton onClick={onCancel} />
   </>
 }
 
@@ -91,7 +101,7 @@ const AvatarUploaderInitial = (props: AvatarUploaderInitialProps) => {
   >
     <input {...getInputProps()} />
     {uploadedImage ? <ImageContainer image={uploadedImage} /> : null}
-    <div>
+    <div className='dropzone-text-container'>
       <span className='initial-text primary'>
         <ImageFileIcon /> {t('initialState.logo')}
       </span>
@@ -115,7 +125,7 @@ export const AvatarUploader = () => {
         setUploadedImage(uploadedImage)
       }}
       onSaveCropping={() => setComponentState('initial')}
-      onCancelCropping={() => setComponentState('initial')}
+      onCancel={() => setComponentState('initial')}
       uploadedImage={uploadedImage}
     />
   </AvatarUploaderContainer>

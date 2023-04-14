@@ -10,7 +10,7 @@ export type AvatarUploaderInnerProps = {
   uploadedImage: string
   onUploadImage: (uploadedImage: string) => void
   onSaveCropping: () => void
-  onCancelCropping: () => void
+  onCancel: () => void
 }
 
 export type AvatarUploaderInitialProps = {
@@ -19,11 +19,15 @@ export type AvatarUploaderInitialProps = {
 }
 
 export type AvatarUploaderErrorProps = {
-
+  onCancel: () => void
 }
 
 export type AvatarUploaderCropProps = {
   uploadedImage: string
   onSaveCropping: () => void
-  onCancelCropping: () => void
+  onCancel: () => void
+}
+
+export type CloseButtonProps = {
+  onClick: () => void
 }
