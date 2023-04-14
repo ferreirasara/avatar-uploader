@@ -1,11 +1,13 @@
 import '../i18n/config';
-import { useCallback, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { useDropzone } from 'react-dropzone';
 import { ImageContainer } from './ImageContainer';
-import { AvatarUploaderContainerProps, AvatarUploaderInitialProps, AvatarUploaderInnerProps, AvatarUploaderComponentState, AvatarUploaderCropProps, AvatarUploaderErrorProps, CloseButtonProps } from '../@types/AvatarUploader';
+import { AvatarUploaderComponentState, AvatarUploaderContainerProps, TAvatarUploaderContext } from '../@types/AvatarUploader';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as ImageFileIcon } from '../icons/image-file.svg';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
+
+const AvatarUploaderContext = createContext<TAvatarUploaderContext>({});
 
 const AvatarUploaderContainer = (props: AvatarUploaderContainerProps) => {
   const { children, bordered } = props;
@@ -14,43 +16,31 @@ const AvatarUploaderContainer = (props: AvatarUploaderContainerProps) => {
   </div>
 }
 
-const CloseButton = (props: CloseButtonProps) => {
-  const { onClick } = props;
+const CloseButton = () => {
+  const { handleCancel } = useContext(AvatarUploaderContext);
+
   return <div className='close-button-container'>
-    <CloseIcon onClick={onClick} />
+    <CloseIcon onClick={handleCancel} />
   </div>
 }
 
-const AvatarUploaderInner = (props: AvatarUploaderInnerProps) => {
-  const { componentState, uploadedImage, onUploadImage, onCancel, onSaveCropping } = props;
+const AvatarUploaderInner = () => {
+  const { componentState } = useContext(AvatarUploaderContext);
 
   switch (componentState) {
     case 'initial':
-      return <AvatarUploaderInitial
-        onUploadImage={onUploadImage}
-        uploadedImage={uploadedImage}
-      />
+      return <AvatarUploaderInitial />
     case 'error':
-      return <AvatarUploaderError
-        onCancel={onCancel}
-      />
+      return <AvatarUploaderError />
     case 'cropping':
-      return <AvatarUploaderCrop
-        uploadedImage={uploadedImage}
-        onCancel={onCancel}
-        onSaveCropping={onSaveCropping}
-      />
+      return <AvatarUploaderCrop />
 
     default:
-      return <AvatarUploaderInitial
-        onUploadImage={onUploadImage}
-        uploadedImage={uploadedImage}
-      />;
+      return <AvatarUploaderInitial />;
   }
 }
 
-const AvatarUploaderError = (props: AvatarUploaderErrorProps) => {
-  const { onCancel } = props;
+const AvatarUploaderError = () => {
   const { t } = useTranslation();
 
   return <>
@@ -60,12 +50,12 @@ const AvatarUploaderError = (props: AvatarUploaderErrorProps) => {
       <br />
       <span className="try-again-text">{t('errorState.tryAgain')}</span>
     </div>
-    <CloseButton onClick={onCancel} />
+    <CloseButton />
   </>
 }
 
-const AvatarUploaderCrop = (props: AvatarUploaderCropProps) => {
-  const { uploadedImage, onCancel, onSaveCropping } = props;
+const AvatarUploaderCrop = () => {
+  const { uploadedImage } = useContext(AvatarUploaderContext);
   const { t } = useTranslation();
 
   return <>
@@ -78,16 +68,16 @@ const AvatarUploaderCrop = (props: AvatarUploaderCropProps) => {
         {t('croppingState.save')}
       </button>
     </div>
-    <CloseButton onClick={onCancel} />
+    <CloseButton />
   </>
 }
 
-const AvatarUploaderInitial = (props: AvatarUploaderInitialProps) => {
-  const { uploadedImage, onUploadImage } = props;
+const AvatarUploaderInitial = () => {
+  const { uploadedImage, handleUploadeImage } = useContext(AvatarUploaderContext);
   const { t } = useTranslation();
 
   const onDrop = useCallback(<T extends File>(acceptedFiles: T[]) => {
-    acceptedFiles?.map(file => onUploadImage(URL.createObjectURL(file)));
+    acceptedFiles?.forEach(file => handleUploadeImage && handleUploadeImage(file));
   }, [])
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -117,16 +107,16 @@ export const AvatarUploader = () => {
   const [componentState, setComponentState] = useState<AvatarUploaderComponentState>('initial');
   const [uploadedImage, setUploadedImage] = useState<string>('');
 
+  const handleCancel = () => setComponentState('initial');
+
+  const handleUploadeImage = (file: File) => {
+    setUploadedImage(URL.createObjectURL(file));
+    setComponentState('cropping');
+  };
+
   return <AvatarUploaderContainer bordered={componentState === 'initial'}>
-    <AvatarUploaderInner
-      componentState={componentState}
-      onUploadImage={(uploadedImage) => {
-        setComponentState('cropping')
-        setUploadedImage(uploadedImage)
-      }}
-      onSaveCropping={() => setComponentState('initial')}
-      onCancel={() => setComponentState('initial')}
-      uploadedImage={uploadedImage}
-    />
+    <AvatarUploaderContext.Provider value={{ componentState, uploadedImage, handleCancel, handleUploadeImage }}>
+      <AvatarUploaderInner />
+    </AvatarUploaderContext.Provider>
   </AvatarUploaderContainer>
 }

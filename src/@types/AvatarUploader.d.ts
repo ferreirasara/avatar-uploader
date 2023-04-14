@@ -5,29 +5,9 @@ export type AvatarUploaderContainerProps = {
   bordered?: boolean
 }
 
-export type AvatarUploaderInnerProps = {
-  componentState: AvatarUploaderComponentState
-  uploadedImage: string
-  onUploadImage: (uploadedImage: string) => void
-  onSaveCropping: () => void
-  onCancel: () => void
-}
-
-export type AvatarUploaderInitialProps = {
-  uploadedImage: string
-  onUploadImage: (uploadedImage: string) => void
-}
-
-export type AvatarUploaderErrorProps = {
-  onCancel: () => void
-}
-
-export type AvatarUploaderCropProps = {
-  uploadedImage: string
-  onSaveCropping: () => void
-  onCancel: () => void
-}
-
-export type CloseButtonProps = {
-  onClick: () => void
+export type TAvatarUploaderContext = {
+  componentState?: AvatarUploaderComponentState
+  uploadedImage?: string
+  handleCancel?: () => void
+  handleUploadeImage?: (file: File) => void
 }
