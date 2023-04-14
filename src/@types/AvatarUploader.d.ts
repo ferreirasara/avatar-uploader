@@ -1,19 +1,29 @@
-export type AvatarUploaderState = 'initial' | 'error' | 'cropping';
+export type AvatarUploaderComponentState = 'initial' | 'error' | 'cropping';
 
 export type AvatarUploaderContainerProps = {
   children: React.ReactNode,
   bordered?: boolean
 }
 
+export type AvatarUploaderInnerProps = {
+  componentState: AvatarUploaderComponentState
+  uploadedImage: string
+  onUploadImage: (uploadedImage: string) => void
+  onSaveCropping: () => void
+  onCancelCropping: () => void
+}
+
 export type AvatarUploaderInitialProps = {
-  img?: string
+  uploadedImage: string
+  onUploadImage: (uploadedImage: string) => void
+}
+
+export type AvatarUploaderErrorProps = {
+
 }
 
 export type AvatarUploaderCropProps = {
-  img?: string
-}
-
-export type AvatarUploaderInnerProps = {
-  componentState: AvatarUploaderState
-  uploadedImage?: string
+  uploadedImage: string
+  onSaveCropping: () => void
+  onCancelCropping: () => void
 }

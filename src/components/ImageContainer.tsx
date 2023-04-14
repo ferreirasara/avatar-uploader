@@ -1,4 +1,3 @@
-import { CSSProperties } from "react";
 import { ImageContainerProps } from "../@types/ImageContainerProps";
 import { ReactComponent as InfoIcon } from '../icons/info.svg';
 
