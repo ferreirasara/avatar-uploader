@@ -6,6 +6,7 @@ import { AvatarUploaderComponentState, AvatarUploaderContainerProps, TAvatarUplo
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as ImageFileIcon } from '../icons/image-file.svg';
 import { ReactComponent as CloseIcon } from '../icons/close.svg';
+import { Slider } from './Slider';
 
 const AvatarUploaderContext = createContext<TAvatarUploaderContext>({});
 
@@ -59,26 +60,15 @@ const AvatarUploaderCrop = () => {
   const { t } = useTranslation();
   const [zoomValue, setZoomValue] = useState<number>(50);
 
+
+
   return <>
     <ImageContainer image={uploadedImage} />
     <div className='crop-container'>
       <span className="crop-text">
         {t('croppingState.crop')}
       </span>
-      <input
-        type="range"
-        className='crop-slider'
-        value={zoomValue}
-        max={100}
-        min={0}
-        onChange={(e) => {
-          const min = parseInt(e?.target?.min)
-          const max = parseInt(e?.target?.max)
-          const value = parseInt(e?.target?.value);
-          e.target.style.backgroundSize = (value - min) * 100 / (max - min) + '% 100%'
-          setZoomValue(value)
-        }}
-      />
+      <Slider value={zoomValue} onChange={(newValue) => setZoomValue(newValue)} />
       <div className='save-crop-button-container'>
         <button className="save-crop-button">
           {t('croppingState.save')}

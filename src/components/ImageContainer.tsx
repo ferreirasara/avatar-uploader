@@ -1,4 +1,4 @@
-import { ImageContainerProps } from "../@types/ImageContainerProps";
+import { ImageContainerProps } from "../@types/ImageContainer";
 import { ReactComponent as InfoIcon } from '../icons/info.svg';
 
 const ImagePlaceholder = () => {
