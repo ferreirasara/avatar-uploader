@@ -95,7 +95,7 @@ const AvatarUploaderInitial = () => {
 
   const onDrop = useCallback(<T extends File>(acceptedFiles: T[]) => {
     acceptedFiles?.forEach(file => handleUploadeImage && handleUploadeImage(file));
-  }, [])
+  }, [handleUploadeImage])
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
