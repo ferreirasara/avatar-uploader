@@ -57,16 +57,33 @@ const AvatarUploaderError = () => {
 const AvatarUploaderCrop = () => {
   const { uploadedImage } = useContext(AvatarUploaderContext);
   const { t } = useTranslation();
+  const [zoomValue, setZoomValue] = useState<number>(50);
 
   return <>
     <ImageContainer image={uploadedImage} />
-    <div>
+    <div className='crop-container'>
       <span className="crop-text">
         {t('croppingState.crop')}
       </span>
-      <button className="save-crop-button">
-        {t('croppingState.save')}
-      </button>
+      <input
+        type="range"
+        className='crop-slider'
+        value={zoomValue}
+        max={100}
+        min={0}
+        onChange={(e) => {
+          const min = parseInt(e?.target?.min)
+          const max = parseInt(e?.target?.max)
+          const value = parseInt(e?.target?.value);
+          e.target.style.backgroundSize = (value - min) * 100 / (max - min) + '% 100%'
+          setZoomValue(value)
+        }}
+      />
+      <div className='save-crop-button-container'>
+        <button className="save-crop-button">
+          {t('croppingState.save')}
+        </button>
+      </div>
     </div>
     <CloseButton />
   </>
