@@ -1,3 +1,4 @@
+import '../style/ImageContainer.scss';
 import { ImageContainerProps } from "../@types/ImageContainer";
 import { ReactComponent as InfoIcon } from '../icons/info.svg';
 

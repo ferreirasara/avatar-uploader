@@ -1,4 +1,5 @@
 import '../i18n/config';
+import '../style/AvatarUploader.scss';
 import { createContext, useCallback, useContext, useState } from "react";
 import { useDropzone } from 'react-dropzone';
 import { ImageContainer } from './ImageContainer';
@@ -59,8 +60,6 @@ const AvatarUploaderCrop = () => {
   const { uploadedImage } = useContext(AvatarUploaderContext);
   const { t } = useTranslation();
   const [zoomValue, setZoomValue] = useState<number>(50);
-
-
 
   return <>
     <ImageContainer image={uploadedImage} />
