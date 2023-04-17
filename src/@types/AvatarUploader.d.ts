@@ -7,7 +7,9 @@ export type AvatarUploaderContainerProps = {
 
 export type TAvatarUploaderContext = {
   componentState?: AvatarUploaderComponentState
-  uploadedImage?: string
+  croppedImage?: string
+  uploadedFile?: File
   handleCancel?: () => void
   handleUploadeImage?: (file: File) => void
+  handleSaveCroppedImage?: (imgSrc: string) => void
 }

@@ -1,6 +1,6 @@
 import '../i18n/config';
 import '../style/AvatarUploader.scss';
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useDropzone } from 'react-dropzone';
 import { ImageContainer } from './ImageContainer';
 import { AvatarUploaderComponentState, AvatarUploaderContainerProps, TAvatarUploaderContext } from '../@types/AvatarUploader';
@@ -57,19 +57,44 @@ const AvatarUploaderError = () => {
 }
 
 const AvatarUploaderCrop = () => {
-  const { uploadedImage } = useContext(AvatarUploaderContext);
+  const { uploadedFile, handleSaveCroppedImage } = useContext(AvatarUploaderContext);
   const { t } = useTranslation();
   const [zoomValue, setZoomValue] = useState<number>(50);
+  const [localCroppedImage, setLocalCroppedImage] = useState<string>();
+
+  useEffect(() => {
+    const img = new Image();
+    if (uploadedFile) img.src = URL.createObjectURL(uploadedFile)
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas?.getContext('2d');
+
+      const zoomPerc = zoomValue / 100;
+      const cropWidth = img.width * (1 - zoomPerc);
+      const cropHeight = img.height * (1 - zoomPerc);
+      const x1 = img.width - cropWidth;
+      const y1 = img.height - cropHeight;
+
+      canvas.width = cropWidth;
+      canvas.height = cropHeight;
+
+      ctx?.drawImage(img, x1, y1, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+
+      canvas?.toBlob((blob) => {
+        if (blob) setLocalCroppedImage(URL.createObjectURL(blob));
+      });
+    };
+  }, [zoomValue])
 
   return <>
-    <ImageContainer image={uploadedImage} />
+    <ImageContainer image={localCroppedImage} />
     <div className='crop-container'>
       <span className="crop-text">
         {t('croppingState.crop')}
       </span>
       <Slider value={zoomValue} onChange={(newValue) => setZoomValue(newValue)} />
       <div className='save-crop-button-container'>
-        <button className="save-crop-button">
+        <button className="save-crop-button" onClick={() => handleSaveCroppedImage && localCroppedImage && handleSaveCroppedImage(localCroppedImage)}>
           {t('croppingState.save')}
         </button>
       </div>
@@ -79,7 +104,7 @@ const AvatarUploaderCrop = () => {
 }
 
 const AvatarUploaderInitial = () => {
-  const { uploadedImage, handleUploadeImage } = useContext(AvatarUploaderContext);
+  const { croppedImage, handleUploadeImage } = useContext(AvatarUploaderContext);
   const { t } = useTranslation();
 
   const onDrop = useCallback(<T extends File>(acceptedFiles: T[]) => {
@@ -96,7 +121,7 @@ const AvatarUploaderInitial = () => {
     className='dropzone-container'
   >
     <input {...getInputProps()} />
-    {uploadedImage ? <ImageContainer image={uploadedImage} /> : null}
+    {croppedImage ? <ImageContainer image={croppedImage} /> : null}
     <div className='dropzone-text-container'>
       <span className='initial-text primary'>
         <ImageFileIcon /> {t('initialState.logo')}
@@ -111,17 +136,27 @@ const AvatarUploaderInitial = () => {
 
 export const AvatarUploader = () => {
   const [componentState, setComponentState] = useState<AvatarUploaderComponentState>('initial');
-  const [uploadedImage, setUploadedImage] = useState<string>('');
+  const [croppedImage, setCroppedImage] = useState<string>();
+  const [uploadedFile, setUploadedFile] = useState<File>();
 
-  const handleCancel = () => setComponentState('initial');
+  const handleCancel = () => {
+    setUploadedFile(undefined);
+    setComponentState('initial');
+  };
 
   const handleUploadeImage = (file: File) => {
-    setUploadedImage(URL.createObjectURL(file));
+    setUploadedFile(file);
+    setCroppedImage(undefined);
     setComponentState('cropping');
   };
 
+  const handleSaveCroppedImage = (imgSrc: string) => {
+    setCroppedImage(imgSrc);
+    setComponentState('initial');
+  }
+
   return <AvatarUploaderContainer bordered={componentState === 'initial'}>
-    <AvatarUploaderContext.Provider value={{ componentState, uploadedImage, handleCancel, handleUploadeImage }}>
+    <AvatarUploaderContext.Provider value={{ componentState, croppedImage, uploadedFile, handleCancel, handleUploadeImage, handleSaveCroppedImage }}>
       <AvatarUploaderInner />
     </AvatarUploaderContext.Provider>
   </AvatarUploaderContainer>
