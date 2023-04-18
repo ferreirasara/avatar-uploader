@@ -22,7 +22,7 @@ const CloseButton = () => {
   const { handleCancel } = useContext(AvatarUploaderContext);
 
   return <div className='close-button-container'>
-    <CloseIcon onClick={handleCancel} />
+    <CloseIcon id='close-icon' onClick={handleCancel} />
   </div>
 }
 

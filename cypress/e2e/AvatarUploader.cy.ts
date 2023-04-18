@@ -4,7 +4,6 @@ describe('AvatarUploader spec', () => {
     cy.visit('/');
     cy.get('input[type=file]').selectFile('cypress/fixtures/cat.png', { force: true, action: 'drag-drop' });
     cy.get('img').should('be.visible');
-    cy.wait(1000);
 
     cy.get('input[type="range"]').then(($range) => {
       const range = $range[0];
@@ -12,11 +11,9 @@ describe('AvatarUploader spec', () => {
       // @ts-ignore
       range.dispatchEvent(new Event('change', { value: 15, bubbles: true }));
     });
-    cy.wait(1000);
     cy.get('input[type=range]').should('have.value', 15);
 
     cy.get('button.save-crop-button').click();
-    cy.wait(1000);
 
     cy.get('img').should('be.visible');
     cy.get('span.initial-text.primary').should('be.visible');
@@ -28,5 +25,13 @@ describe('AvatarUploader spec', () => {
     cy.get('input[type=file]').selectFile('cypress/fixtures/invalid-image.png', { force: true, action: 'drag-drop' });
     cy.get('span.error-text').should('be.visible');
     cy.get('span.try-again-text').should('be.visible');
-  })
+  });
+
+  it('return to initial state when click on cancel button', () => {
+    cy.visit('/');
+    cy.get('input[type=file]').selectFile('cypress/fixtures/cat.png', { force: true, action: 'drag-drop' });
+    cy.get('#close-icon').click();
+    cy.get('span.initial-text.primary').should('be.visible');
+    cy.get('span.initial-text.secondary').should('be.visible');
+  });
 })
