@@ -43,6 +43,7 @@ const AvatarUploaderInner = () => {
 }
 
 const AvatarUploaderError = () => {
+  const { handleCancel } = useContext(AvatarUploaderContext);
   const { t } = useTranslation();
 
   return <>
@@ -50,14 +51,14 @@ const AvatarUploaderError = () => {
     <div className='error-text-container'>
       <span className='error-text'>{t('errorState.sorry')}</span>
       <br />
-      <span className="try-again-text">{t('errorState.tryAgain')}</span>
+      <span className="try-again-text" onClick={handleCancel}>{t('errorState.tryAgain')}</span>
     </div>
     <CloseButton />
   </>
 }
 
 const AvatarUploaderCrop = () => {
-  const { uploadedFile, handleSaveCroppedImage } = useContext(AvatarUploaderContext);
+  const { uploadedFile, handleSaveCroppedImage, handleError } = useContext(AvatarUploaderContext);
   const { t } = useTranslation();
   const [zoomValue, setZoomValue] = useState<number>(50);
   const [localCroppedImage, setLocalCroppedImage] = useState<string>();
@@ -84,6 +85,9 @@ const AvatarUploaderCrop = () => {
         if (blob) setLocalCroppedImage(URL.createObjectURL(blob));
       });
     };
+    img.onerror = () => {
+      handleError && handleError();
+    };
   }, [zoomValue])
 
   return <>
@@ -104,11 +108,16 @@ const AvatarUploaderCrop = () => {
 }
 
 const AvatarUploaderInitial = () => {
-  const { croppedImage, handleUploadeImage } = useContext(AvatarUploaderContext);
+  const { croppedImage, handleUploadeImage, handleError } = useContext(AvatarUploaderContext);
   const { t } = useTranslation();
 
   const onDrop = useCallback(<T extends File>(acceptedFiles: T[]) => {
-    acceptedFiles?.forEach(file => handleUploadeImage && handleUploadeImage(file));
+    try {
+      acceptedFiles?.forEach(file => handleUploadeImage && handleUploadeImage(file));
+    } catch (e) {
+      console.log(e)
+      handleError && handleError();
+    }
   }, [handleUploadeImage])
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -142,6 +151,8 @@ export const AvatarUploader = () => {
   const [croppedImage, setCroppedImage] = useState<string>();
   const [uploadedFile, setUploadedFile] = useState<File>();
 
+  const handleError = () => setComponentState('error');
+
   const handleCancel = () => {
     setUploadedFile(undefined);
     setComponentState('initial');
@@ -159,7 +170,7 @@ export const AvatarUploader = () => {
   }
 
   return <AvatarUploaderContainer bordered={componentState === 'initial'}>
-    <AvatarUploaderContext.Provider value={{ componentState, croppedImage, uploadedFile, handleCancel, handleUploadeImage, handleSaveCroppedImage }}>
+    <AvatarUploaderContext.Provider value={{ componentState, croppedImage, uploadedFile, handleError, handleCancel, handleUploadeImage, handleSaveCroppedImage }}>
       <AvatarUploaderInner />
     </AvatarUploaderContext.Provider>
   </AvatarUploaderContainer>

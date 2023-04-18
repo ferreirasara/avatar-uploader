@@ -9,6 +9,7 @@ export type TAvatarUploaderContext = {
   componentState?: AvatarUploaderComponentState
   croppedImage?: string
   uploadedFile?: File
+  handleError?: () => void
   handleCancel?: () => void
   handleUploadeImage?: (file: File) => void
   handleSaveCroppedImage?: (imgSrc: string) => void
