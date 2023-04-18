@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ImageContainer renders correctly 1`] = `
+exports[`ImageContainer match snapshot (with image prop) 1`] = `
 <div
   className="image-container"
 >
@@ -8,5 +8,19 @@ exports[`ImageContainer renders correctly 1`] = `
     className="image-container img"
     src="https://dummyimage.com/largerectangle"
   />
+</div>
+`;
+
+exports[`ImageContainer match snapshot (without image prop) 1`] = `
+<div
+  className="image-container"
+>
+  <div
+    className="image-container placeholder"
+  >
+    <svg>
+      info.svg
+    </svg>
+  </div>
 </div>
 `;
