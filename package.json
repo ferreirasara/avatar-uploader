@@ -69,6 +69,7 @@
     "@storybook/testing-library": "^0.0.14-next.2",
     "@types/react-test-renderer": "^18.0.0",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "cypress": "^12.10.0",
     "prop-types": "^15.8.1",
     "storybook": "^7.0.5",
     "webpack": "^5.79.0"
