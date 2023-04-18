@@ -22,4 +22,11 @@ describe('AvatarUploader spec', () => {
     cy.get('span.initial-text.primary').should('be.visible');
     cy.get('span.initial-text.secondary').should('be.visible');
   });
+
+  it('show error message when image is invalid', () => {
+    cy.visit('/');
+    cy.get('input[type=file]').selectFile('cypress/fixtures/invalid-image.png', { force: true, action: 'drag-drop' });
+    cy.get('span.error-text').should('be.visible');
+    cy.get('span.try-again-text').should('be.visible');
+  })
 })
