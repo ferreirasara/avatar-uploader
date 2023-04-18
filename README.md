@@ -1,5 +1,7 @@
 # 🌟 Avatar Uploader
 
+<img src="https://img.shields.io/codeclimate/maintainability/ferreirasara/avatar-uploader?style=flat-square" /> <img src="https://img.shields.io/codeclimate/tech-debt/ferreirasara/avatar-uploader?style=flat-square" /> <img src="https://img.shields.io/github/repo-size/ferreirasara/avatar-uploader?style=flat-square" /> 
+
 Avatar Uploader is a React and TypeScript project that provides a user interface for uploading avatars. This project was build as part of an selective process.
 
 ## 🚀 Installation
