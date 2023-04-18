@@ -120,7 +120,10 @@ const AvatarUploaderInitial = () => {
     {...getRootProps()}
     className='dropzone-container'
   >
-    <input {...getInputProps()} />
+    <input
+      {...getInputProps()}
+      data-testid={'file-input'}
+    />
     {croppedImage ? <ImageContainer image={croppedImage} /> : null}
     <div className='dropzone-text-container'>
       <span className='initial-text primary'>

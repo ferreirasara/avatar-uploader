@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AvatarUploader renders correctly 1`] = `
+exports[`AvatarUploader match snapshot 1`] = `
 <div
   className="avatar-uploader-container bordered"
 >
@@ -19,6 +19,7 @@ exports[`AvatarUploader renders correctly 1`] = `
   >
     <input
       accept="image/jpeg,.jpeg,.png"
+      data-testid="file-input"
       multiple={true}
       onChange={[Function]}
       onClick={[Function]}
