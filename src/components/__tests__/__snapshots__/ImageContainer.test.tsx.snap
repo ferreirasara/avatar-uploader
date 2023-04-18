@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImageContainer renders correctly 1`] = `
+<div
+  className="image-container"
+>
+  <img
+    className="image-container img"
+    src="https://dummyimage.com/largerectangle"
+  />
+</div>
+`;

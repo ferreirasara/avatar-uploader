@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slider renders correctly 1`] = `
+<input
+  className="slider"
+  max={100}
+  min={0}
+  onChange={[Function]}
+  type="range"
+  value={50}
+/>
+`;
