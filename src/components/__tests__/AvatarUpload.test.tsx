@@ -1,8 +1,8 @@
 import renderer from 'react-test-renderer';
-import { AvatarUploader } from '../AvatarUploader';
+import { AvatarUpload } from '../AvatarUpload';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
-describe('AvatarUploader', () => {
+describe('AvatarUpload', () => {
   let file: File;
 
   beforeEach(() => {
@@ -10,12 +10,12 @@ describe('AvatarUploader', () => {
   });
 
   it('match snapshot', () => {
-    const avatarUploader = renderer.create(<AvatarUploader />).toJSON();
+    const avatarUploader = renderer.create(<AvatarUpload />).toJSON();
     expect(avatarUploader).toMatchSnapshot();
   });
 
   it('renders correct text', () => {
-    const { getByText } = render(<AvatarUploader />);
+    const { getByText } = render(<AvatarUpload />);
 
     const logoEl = getByText(/Organization Logo/i);
     expect(logoEl).toBeInTheDocument();
@@ -25,7 +25,7 @@ describe('AvatarUploader', () => {
   });
 
   it('uploads a file', async () => {
-    const { getByTestId } = render(<AvatarUploader />);
+    const { getByTestId } = render(<AvatarUpload />);
     let fileInputEl = getByTestId("file-input");
 
     await waitFor(() =>

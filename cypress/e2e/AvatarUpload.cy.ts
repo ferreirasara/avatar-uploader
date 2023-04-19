@@ -1,5 +1,5 @@
 const nativeInputValueSetter = Object?.getOwnPropertyDescriptor(window?.HTMLInputElement?.prototype, 'value')?.set;
-describe('AvatarUploader spec', () => {
+describe('AvatarUpload spec', () => {
   it('uploads and crop a file', () => {
     cy.visit('/');
     cy.get('input[type=file]').selectFile('cypress/fixtures/cat.png', { force: true, action: 'drag-drop' });

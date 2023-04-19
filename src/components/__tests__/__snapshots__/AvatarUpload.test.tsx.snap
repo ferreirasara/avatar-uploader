@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AvatarUploader match snapshot 1`] = `
+exports[`AvatarUpload match snapshot 1`] = `
 <div
   className="avatar-uploader-container bordered"
 >

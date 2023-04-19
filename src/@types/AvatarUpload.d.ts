@@ -1,12 +1,12 @@
-export type AvatarUploaderComponentState = 'initial' | 'error' | 'cropping';
+export type AvatarUploadComponentState = 'initial' | 'error' | 'cropping';
 
-export type AvatarUploaderContainerProps = {
+export type AvatarUploadContainerProps = {
   children: React.ReactNode,
   bordered?: boolean
 }
 
-export type TAvatarUploaderContext = {
-  componentState?: AvatarUploaderComponentState
+export type TAvatarUploadContext = {
+  componentState?: AvatarUploadComponentState
   croppedImage?: string
   uploadedFile?: File
   handleError?: () => void
