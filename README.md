@@ -1,12 +1,12 @@
-# 🌟 Avatar Uploader
+# 🌟 Avatar Upload
 
-<img src="https://img.shields.io/codeclimate/maintainability/ferreirasara/avatar-uploader?style=flat-square" /> <img src="https://img.shields.io/codeclimate/tech-debt/ferreirasara/avatar-uploader?style=flat-square" /> <img src="https://img.shields.io/github/repo-size/ferreirasara/avatar-uploader?style=flat-square" /> 
+<img src="https://img.shields.io/codeclimate/maintainability/ferreirasara/avatar-upload?style=flat-square" /> <img src="https://img.shields.io/codeclimate/tech-debt/ferreirasara/avatar-upload?style=flat-square" /> <img src="https://img.shields.io/github/repo-size/ferreirasara/avatar-upload?style=flat-square" /> 
 
-Avatar Uploader is a React and TypeScript project that provides a user interface for uploading avatars. This project was build as part of an selective process.
+Avatar Upload is a React and TypeScript project that provides a user interface for uploading avatars. This project was build as part of an selective process.
 
 ## 🚀 Installation
 
-To install Avatar Uploader, clone the repository and run the following command:
+To install Avatar Upload, clone the repository and run the following command:
 
 ```
 npm install
@@ -26,10 +26,10 @@ This will start the project and launch it in your default browser.
 
 ### 🔬 Testing
 
-Avatar Uploader provides two types of tests: unit tests and end-to-end tests. To run the unit tests, use the following command:
+Avatar Upload provides two types of tests: unit tests and end-to-end tests. To run the unit tests, use the following command:
 
 ```
-npm run local:test:unit
+npm run test:unit
 ```
 
 To run the end-to-end tests, use the following command:
@@ -40,7 +40,7 @@ npm run local:test:e2e
 
 ### 📚 Storybook
 
-Avatar Uploader also provides a Storybook for viewing and testing components in isolation. To launch the Storybook, use the following command:
+Avatar Upload also provides a Storybook for viewing and testing components in isolation. To launch the Storybook, use the following command:
 
 ```
 npm run storybook
