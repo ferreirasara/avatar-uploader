@@ -30,8 +30,6 @@ const AvatarUploaderInner = () => {
   const { componentState } = useContext(AvatarUploaderContext);
 
   switch (componentState) {
-    case 'initial':
-      return <AvatarUploaderInitial />
     case 'error':
       return <AvatarUploaderError />
     case 'cropping':
@@ -49,9 +47,15 @@ const AvatarUploaderError = () => {
   return <>
     <ImageContainer />
     <div className='error-text-container'>
-      <span className='error-text'>{t('errorState.sorry')}</span>
-      <br />
-      <span className="try-again-text" onClick={handleCancel}>{t('errorState.tryAgain')}</span>
+      <div className='error-text'>
+        {t('errorState.sorry')}
+      </div>
+      <div
+        className="try-again-text"
+        onClick={handleCancel}
+      >
+        {t('errorState.tryAgain')}
+      </div>
     </div>
     <CloseButton />
   </>
@@ -88,7 +92,7 @@ const AvatarUploaderCrop = () => {
     img.onerror = () => {
       handleError && handleError();
     };
-  }, [zoomValue])
+  }, [zoomValue, handleError, uploadedFile])
 
   return <>
     <ImageContainer image={localCroppedImage} />
@@ -118,7 +122,7 @@ const AvatarUploaderInitial = () => {
       console.log(e)
       handleError && handleError();
     }
-  }, [handleUploadeImage])
+  }, [handleUploadeImage, handleError])
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -135,13 +139,12 @@ const AvatarUploaderInitial = () => {
     />
     {croppedImage ? <ImageContainer image={croppedImage} /> : null}
     <div className='dropzone-text-container'>
-      <span className='initial-text primary'>
+      <div className='initial-text primary'>
         <ImageFileIcon /> {t('initialState.logo')}
-      </span>
-      <br />
-      <span className='initial-text secondary'>
+      </div>
+      <div className='initial-text secondary'>
         {t('initialState.dropImage')}
-      </span>
+      </div>
     </div>
   </div>
 }

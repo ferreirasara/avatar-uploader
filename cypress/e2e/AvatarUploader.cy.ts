@@ -16,22 +16,22 @@ describe('AvatarUploader spec', () => {
     cy.get('button.save-crop-button').click();
 
     cy.get('img').should('be.visible');
-    cy.get('span.initial-text.primary').should('be.visible');
-    cy.get('span.initial-text.secondary').should('be.visible');
+    cy.get('div.initial-text.primary').should('be.visible');
+    cy.get('div.initial-text.secondary').should('be.visible');
   });
 
   it('show error message when image is invalid', () => {
     cy.visit('/');
     cy.get('input[type=file]').selectFile('cypress/fixtures/invalid-image.png', { force: true, action: 'drag-drop' });
-    cy.get('span.error-text').should('be.visible');
-    cy.get('span.try-again-text').should('be.visible');
+    cy.get('div.error-text').should('be.visible');
+    cy.get('div.try-again-text').should('be.visible');
   });
 
   it('return to initial state when click on cancel button', () => {
     cy.visit('/');
     cy.get('input[type=file]').selectFile('cypress/fixtures/cat.png', { force: true, action: 'drag-drop' });
     cy.get('#close-icon').click();
-    cy.get('span.initial-text.primary').should('be.visible');
-    cy.get('span.initial-text.secondary').should('be.visible');
+    cy.get('div.initial-text.primary').should('be.visible');
+    cy.get('div.initial-text.secondary').should('be.visible');
   });
 })

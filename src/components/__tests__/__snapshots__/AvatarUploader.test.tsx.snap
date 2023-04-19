@@ -34,7 +34,7 @@ exports[`AvatarUploader match snapshot 1`] = `
     <div
       className="dropzone-text-container"
     >
-      <span
+      <div
         className="initial-text primary"
       >
         <svg>
@@ -42,13 +42,12 @@ exports[`AvatarUploader match snapshot 1`] = `
         </svg>
          
         Organization Logo
-      </span>
-      <br />
-      <span
+      </div>
+      <div
         className="initial-text secondary"
       >
         Drop the image here or click to browse.
-      </span>
+      </div>
     </div>
   </div>
 </div>
