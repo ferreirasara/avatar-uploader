@@ -1,6 +1,6 @@
 # 🌟 Avatar Upload
 
-<img src="https://img.shields.io/codeclimate/maintainability/ferreirasara/avatar-upload?style=flat-square" /> <img src="https://img.shields.io/codeclimate/tech-debt/ferreirasara/avatar-upload?style=flat-square" /> <img src="https://img.shields.io/github/repo-size/ferreirasara/avatar-upload?style=flat-square" /> 
+<img src="https://img.shields.io/codeclimate/maintainability/ferreirasara/avatar-upload?style=flat-square" /> <img src="https://img.shields.io/codeclimate/tech-debt/ferreirasara/avatar-upload?style=flat-square" /> <img src="https://img.shields.io/github/repo-size/ferreirasara/avatar-upload?style=flat-square" /> <img src="https://wakatime.com/badge/user/e40d157e-ee74-4971-a679-081c59f8d5ba/project/a0bc2739-3063-4c3f-b54f-e5de68c53ae1.svg?style=flat-square" />
 
 Avatar Upload is a React and TypeScript project that provides a user interface for uploading avatars. This project was build as part of an selective process.
 
