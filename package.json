@@ -73,6 +73,6 @@
     "cypress": "^13.2.0",
     "prop-types": "^15.8.1",
     "storybook": "^7.5.0",
-    "webpack": "^5.79.0"
+    "webpack": "^5.94.0"
   }
 }
